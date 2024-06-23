@@ -1,6 +1,7 @@
 package com.duoc.library3.entities;
 
 import com.duoc.library3.interfaces.IOperacionesUsuario;
+import com.duoc.library3.outputs.FileWriterUsuarios;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -9,7 +10,7 @@ import java.util.Scanner;
 import java.util.TreeSet;
 
 public class OperacionesUsuario implements IOperacionesUsuario {
-
+    private FileWriterUsuarios fw = new FileWriterUsuarios();
     //DECLARACION DE HASHMAP PARA ALMACENAR MIS USUARIOS CON SU RESPECTIVO ID
     private static HashMap<Integer, Usuario> listaUsuarios = new HashMap<>();
     //USO DE TREESET PARA LISTAR USUARIOS QUE TENGAN LIBROS PRESTADOS
@@ -77,6 +78,7 @@ public class OperacionesUsuario implements IOperacionesUsuario {
         System.out.println("Usuario registrado correctamente");
         //Guardo el usuario en mi HashMap
         listaUsuarios.put(usuario.getIdUsuario(), usuario);
+        fw.almacenarUsuariosEnTxt(usuario);
     }
 
     @Override
