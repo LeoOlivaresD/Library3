@@ -3,6 +3,7 @@ package com.duoc.library3.entities;
 import com.duoc.library3.excepciones.LibroNoEcontradoException;
 import com.duoc.library3.excepciones.LibroYaPrestadoException;
 import com.duoc.library3.interfaces.IOperacionesBiblioteca;
+import com.duoc.library3.outputs.FileWriterUsuarios;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.InputMismatchException;
@@ -11,6 +12,7 @@ import java.util.Scanner;
 
 public class Biblioteca implements IOperacionesBiblioteca {
 
+    private FileWriterUsuarios fw = new FileWriterUsuarios();
     //USO DE ARRAYLIST PAPA ALMACENAR LIBROS
     private List<Libro> listaLibros = new ArrayList<>();
     //USO EL HASHSET PARA ALMACENAR SOLO LOS LIBROS DISPONIBLES Y PODER MOSTRARLOS DESPUES
@@ -57,6 +59,7 @@ public class Biblioteca implements IOperacionesBiblioteca {
     }
 //METODOS IMPLEMETADOS DE MI INTERFACE
     //ESTE METODO LO LLAMO PARA MOSTRAR TODOS LIBROS EN BBLIOTECA AUNQUE HAYAN SIDO ALQUILADOS, ESTO CON LA INTENCION QUE EL USUARIO VEA LIBROS EN LISTADO Y ELIJA UNO NO DISPONIBLE PARA QUE SE LANCE LA EXCEPCION
+
     @Override
     public void mostrarListaLibros() {
         System.out.println("Mostrando lista de libros\n"
@@ -100,10 +103,12 @@ public class Biblioteca implements IOperacionesBiblioteca {
                             System.out.println("Libro alquilado con exito");
                             //agrego el libro alquilado a una lista de libros que tendra el usuario
                             usuario.getListaLibrosAlquilados().add(libroComparado);
+
                             //Actualizo la lista de libros disponibles de la biblioteca
                             actualizarListalibrosDisponibles();
                             //actualizo la lista de usuarios con libros prestados
                             operacionesUsuario.actualizarListaUsuariosConLibrosPrestados();
+                            fw.actualizarLibrosUsuarioEnTxt(usuario); // Actualizar el archivo del usuario
                             System.out.println("Saliendo del sistema");
                             cicloDoWhile = true;
                         }
@@ -172,6 +177,7 @@ public class Biblioteca implements IOperacionesBiblioteca {
                 listaLibros.add(libroADevolver); //Incorporo nuevamente el libro a su lista original
                 actualizarListalibrosDisponibles(); //Actualizo la lista de libros disponibles
                 operacionesUsuario.actualizarListaUsuariosConLibrosPrestados(); //actualizo la lista de usuarios que tengan libros
+                fw.actualizarLibrosUsuarioEnTxt(usuario); // Actualizar el archivo del usuario
                 System.out.println("Libro devuelto con exito !");
             } else {
                 System.out.println("El usuario no tiene alquilado un libro con el ID proporcionado.");
