@@ -3,7 +3,8 @@ package com.duoc.library3.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Usuario implements Comparable<Usuario>{
+public class Usuario implements Comparable<Usuario> {
+
     //Atrbutos
     private Integer idUsuario;
     private String nombre;
@@ -21,7 +22,6 @@ public class Usuario implements Comparable<Usuario>{
         this.listaLibrosAlquilados = new ArrayList<>();
     }
 
-    
     //Getters & Setters
     public Integer getIdUsuario() {
         return idUsuario;
@@ -57,12 +57,28 @@ public class Usuario implements Comparable<Usuario>{
 
     @Override
     public String toString() {
-        return "Usuario{" + "nombre=" + nombre + ", residencia=" + residencia + '}';
+        // Utilizo un StringBuilder para construir la cadena de texto de manera eficiente.
+        StringBuilder sb = new StringBuilder();
+        sb.append("Usuario{")
+                .append("idUsuario=").append(idUsuario)
+                .append(", nombre=").append(nombre)
+                .append(", residencia=").append(residencia)
+                .append(", librosAlquilados=[");
+        // Itero sobre la lista de libros alquilados y llamo al método 
+        // toString de cada libro para añadir su información a la cadena
+        for (int i = 0; i < listaLibrosAlquilados.size(); i++) { 
+            sb.append(listaLibrosAlquilados.get(i).toString());
+            if (i < listaLibrosAlquilados.size() - 1) {
+                sb.append(", "); //Añado comas entre los libros
+            }
+        }
+        sb.append("]}"); //Cierro la lista con ]
+        return sb.toString();
     }
 
     @Override
     public int compareTo(Usuario otroUsuario) {
         return Integer.compare(this.idUsuario, otroUsuario.getIdUsuario());
     }
-    
+
 }
