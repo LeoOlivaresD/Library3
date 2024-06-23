@@ -3,7 +3,7 @@ package com.duoc.library3.entities;
 import com.duoc.library3.excepciones.LibroNoEcontradoException;
 import com.duoc.library3.excepciones.LibroYaPrestadoException;
 import com.duoc.library3.interfaces.IOperacionesBiblioteca;
-import com.duoc.library3.outputs.FileWriterUsuarios;
+import com.duoc.library3.outputs.OutputsUsuario;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.InputMismatchException;
@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class Biblioteca implements IOperacionesBiblioteca {
 
-    private FileWriterUsuarios fw = new FileWriterUsuarios();
+    private OutputsUsuario fw = new OutputsUsuario();
     //USO DE ARRAYLIST PAPA ALMACENAR LIBROS
     private List<Libro> listaLibros = new ArrayList<>();
     //USO EL HASHSET PARA ALMACENAR SOLO LOS LIBROS DISPONIBLES Y PODER MOSTRARLOS DESPUES
@@ -108,7 +108,7 @@ public class Biblioteca implements IOperacionesBiblioteca {
                             actualizarListalibrosDisponibles();
                             //actualizo la lista de usuarios con libros prestados
                             operacionesUsuario.actualizarListaUsuariosConLibrosPrestados();
-                            fw.actualizarLibrosUsuarioEnTxt(usuario); // Actualizar el archivo del usuario
+                            fw.actualizarListaUsuariosEnTxtConLibros(usuario); // Actualizar el archivo del usuario
                             System.out.println("Saliendo del sistema");
                             cicloDoWhile = true;
                         }
@@ -177,7 +177,7 @@ public class Biblioteca implements IOperacionesBiblioteca {
                 listaLibros.add(libroADevolver); //Incorporo nuevamente el libro a su lista original
                 actualizarListalibrosDisponibles(); //Actualizo la lista de libros disponibles
                 operacionesUsuario.actualizarListaUsuariosConLibrosPrestados(); //actualizo la lista de usuarios que tengan libros
-                fw.actualizarLibrosUsuarioEnTxt(usuario); // Actualizar el archivo del usuario
+                fw.actualizarListaUsuariosEnTxtConLibros(usuario); // Actualizar el archivo del usuario
                 System.out.println("Libro devuelto con exito !");
             } else {
                 System.out.println("El usuario no tiene alquilado un libro con el ID proporcionado.");
