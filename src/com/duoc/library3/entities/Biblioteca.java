@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Biblioteca implements IOperacionesBiblioteca {
-
+    //borrar instncia y pasar Objeto por constructor del metodo alquilar libro
     private OutputsUsuario fw = new OutputsUsuario();
     //USO DE ARRAYLIST PAPA ALMACENAR LIBROS
     private List<Libro> listaLibros = new ArrayList<>();
@@ -20,17 +20,6 @@ public class Biblioteca implements IOperacionesBiblioteca {
 
     //Constructores
     public Biblioteca() {
-        //Creacion de libros y agregado a listas por medio del constructor
-        Libro libro = new Libro("El alquimista", "Paulo Cohelo", true, 1);
-        listaLibros.add(libro);
-        Libro libro2 = new Libro("La odisea", "Homero", true, 2);
-        listaLibros.add(libro2);
-        Libro libro3 = new Libro("Romeo y Julieta", "William Shakespeare", true, 3);
-        listaLibros.add(libro3);
-        Libro libro4 = new Libro("Don Quijote", "Miguel de Cervantes", true, 4);
-        listaLibros.add(libro4);
-        Libro libro5 = new Libro("The Hobbit", "J.R.R. Tolkien", true, 5);
-        listaLibros.add(libro5);
         //Llamo al método actualizarListaLibrosDisponibles en el constructor para asegurar que la lista de libros disponibles esté actualizada desde el inicio
         actualizarListalibrosDisponibles();
     }
@@ -71,7 +60,7 @@ public class Biblioteca implements IOperacionesBiblioteca {
     }
 
     @Override
-    public void alquilarLibro(OperacionesUsuario operacionesUsuario, int idUsuario) {
+    public void alquilarLibro(OutputsUsuario fw,OperacionesUsuario operacionesUsuario, int idUsuario) {
         Usuario usuario = operacionesUsuario.getUsuarioPorId(idUsuario);
         if (usuario == null) {
             System.out.println("Usuario no encontrado, por favor registrese antes de alquilar un libro.");
@@ -108,7 +97,8 @@ public class Biblioteca implements IOperacionesBiblioteca {
                             actualizarListalibrosDisponibles();
                             //actualizo la lista de usuarios con libros prestados
                             operacionesUsuario.actualizarListaUsuariosConLibrosPrestados();
-                            fw.actualizarListaUsuariosEnTxtConLibros(usuario); // Actualizar el archivo del usuario
+                            // Actualizar el archivo del usuario
+                            fw.actualizarListaUsuariosEnTxtConLibros(usuario);
                             System.out.println("Saliendo del sistema");
                             cicloDoWhile = true;
                         }
@@ -145,22 +135,21 @@ public class Biblioteca implements IOperacionesBiblioteca {
     //MUESTRA TODOS LOS LIBROS DISPONIBLES EN BIBLIOTECA
     @Override
     public void mostrarListaConLibrosDisponibles() {
-        int contador = 0;
+        //int contador = 0;
         actualizarListalibrosDisponibles();//Me aseguro de actualizar la lista antes de mostrarla
         if (listaLibrosDisponibles.isEmpty()) {
             System.out.println("Lo sentimos, en este momento todos los libros han sido alquilados");
         } else {
             System.out.println("Libros disponibles en biblioteca: ");
             for (Libro libro : listaLibrosDisponibles) {
-                System.out.println("Id " + (contador + 1) + " " + libro.getTitulo());
-                contador++;
+                System.out.println("Id " + libro.getIdLibro() + " " + libro.getTitulo());
             }
         }
     }
 
     //DEVUELVE UN LIBRO Y ACTUALIZA LAS LISTAS DE USUARIOS Y LIBROS
     @Override
-    public void devolverLibro(OperacionesUsuario operacionesUsuario, int idUsuario, int idLibro) {
+    public void devolverLibro(OutputsUsuario fw ,OperacionesUsuario operacionesUsuario, int idUsuario, int idLibro) {
         Usuario usuario = operacionesUsuario.getUsuarioPorId(idUsuario); //Capturo el id de un usuario el cual se supone que devolvera un lbro
         if (usuario != null) { //valida que el usuario exista
             List<Libro> librosAlquilados = usuario.getListaLibrosAlquilados(); //Copia la lista de libros del usuario elegido a una nueva lista
