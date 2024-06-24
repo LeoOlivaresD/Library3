@@ -92,7 +92,6 @@ public class Biblioteca implements IOperacionesBiblioteca {
                             System.out.println("Libro alquilado con exito");
                             //agrego el libro alquilado a una lista de libros que tendra el usuario
                             usuario.getListaLibrosAlquilados().add(libroComparado);
-
                             //Actualizo la lista de libros disponibles de la biblioteca
                             actualizarListalibrosDisponibles();
                             //actualizo la lista de usuarios con libros prestados
