@@ -68,7 +68,7 @@ public class Library3 {
                 //REGISTRO DE USUARIO
                 case 1:
                     System.out.println("Registrando usuario");
-                    operacionesUsuario.registrarUsuario();
+                    operacionesUsuario.registrarUsuario(outputsUsuario);
                     break;
                 //ALQUILAR UN LIBRO
                 case 2:
