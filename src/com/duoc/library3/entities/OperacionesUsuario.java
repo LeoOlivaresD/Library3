@@ -10,7 +10,6 @@ import java.util.Scanner;
 import java.util.TreeSet;
 
 public class OperacionesUsuario implements IOperacionesUsuario {
-    private OutputsUsuario fw = new OutputsUsuario();
     //DECLARACION DE HASHMAP PARA ALMACENAR MIS USUARIOS CON SU RESPECTIVO ID
     private static HashMap<Integer, Usuario> listaUsuarios = new HashMap<>();
     //USO DE TREESET PARA LISTAR USUARIOS QUE TENGAN LIBROS PRESTADOS
@@ -40,7 +39,7 @@ public class OperacionesUsuario implements IOperacionesUsuario {
     //Metodos implementdos por interface
     //CON CADA LLAMADA AL METODO CREARÉ NUEVOS USUARIOS QUE ALACENARÉ EN MI LISTA CON HASHMAP
     @Override
-    public void registrarUsuario() {
+    public void registrarUsuario(OutputsUsuario fw) {
         Usuario usuario = new Usuario();
         Scanner sc = new Scanner(System.in);
         Boolean cicloDoWhile = true;
