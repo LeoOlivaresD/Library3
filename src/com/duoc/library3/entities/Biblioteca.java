@@ -3,6 +3,7 @@ package com.duoc.library3.entities;
 import com.duoc.library3.excepciones.LibroNoEcontradoException;
 import com.duoc.library3.excepciones.LibroYaPrestadoException;
 import com.duoc.library3.interfaces.IOperacionesBiblioteca;
+import com.duoc.library3.outputs.OutputsUsuario;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.InputMismatchException;
@@ -10,7 +11,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Biblioteca implements IOperacionesBiblioteca {
-
+    //borrar instncia y pasar Objeto por constructor del metodo alquilar libro
+    private OutputsUsuario fw = new OutputsUsuario();
     //USO DE ARRAYLIST PAPA ALMACENAR LIBROS
     private List<Libro> listaLibros = new ArrayList<>();
     //USO EL HASHSET PARA ALMACENAR SOLO LOS LIBROS DISPONIBLES Y PODER MOSTRARLOS DESPUES
@@ -18,17 +20,6 @@ public class Biblioteca implements IOperacionesBiblioteca {
 
     //Constructores
     public Biblioteca() {
-        //Creacion de libros y agregado a listas por medio del constructor
-        Libro libro = new Libro("El alquimista", "Paulo Cohelo", true, 1);
-        listaLibros.add(libro);
-        Libro libro2 = new Libro("La odisea", "Homero", true, 2);
-        listaLibros.add(libro2);
-        Libro libro3 = new Libro("Romeo y Julieta", "William Shakespeare", true, 3);
-        listaLibros.add(libro3);
-        Libro libro4 = new Libro("Don Quijote", "Miguel de Cervantes", true, 4);
-        listaLibros.add(libro4);
-        Libro libro5 = new Libro("The Hobbit", "J.R.R. Tolkien", true, 5);
-        listaLibros.add(libro5);
         //Llamo al método actualizarListaLibrosDisponibles en el constructor para asegurar que la lista de libros disponibles esté actualizada desde el inicio
         actualizarListalibrosDisponibles();
     }
@@ -57,6 +48,7 @@ public class Biblioteca implements IOperacionesBiblioteca {
     }
 //METODOS IMPLEMETADOS DE MI INTERFACE
     //ESTE METODO LO LLAMO PARA MOSTRAR TODOS LIBROS EN BBLIOTECA AUNQUE HAYAN SIDO ALQUILADOS, ESTO CON LA INTENCION QUE EL USUARIO VEA LIBROS EN LISTADO Y ELIJA UNO NO DISPONIBLE PARA QUE SE LANCE LA EXCEPCION
+
     @Override
     public void mostrarListaLibros() {
         System.out.println("Mostrando lista de libros\n"
@@ -68,7 +60,7 @@ public class Biblioteca implements IOperacionesBiblioteca {
     }
 
     @Override
-    public void alquilarLibro(OperacionesUsuario operacionesUsuario, int idUsuario) {
+    public void alquilarLibro(OutputsUsuario fw,OperacionesUsuario operacionesUsuario, int idUsuario) {
         Usuario usuario = operacionesUsuario.getUsuarioPorId(idUsuario);
         if (usuario == null) {
             System.out.println("Usuario no encontrado, por favor registrese antes de alquilar un libro.");
@@ -125,6 +117,8 @@ public class Biblioteca implements IOperacionesBiblioteca {
             }
         } while (!cicloDoWhile);
     }
+    
+    
 
     //CON ESTE METODO RECORRO MI LISTA DE LIBROS BUSCANDO TODOS LOS QUE TENGAN DISPONIBILIDAD EN TRUE PARA AGREGARLOS A MI LISTA DE DISPONIBLES
     @Override
@@ -140,22 +134,21 @@ public class Biblioteca implements IOperacionesBiblioteca {
     //MUESTRA TODOS LOS LIBROS DISPONIBLES EN BIBLIOTECA
     @Override
     public void mostrarListaConLibrosDisponibles() {
-        int contador = 0;
+        //int contador = 0;
         actualizarListalibrosDisponibles();//Me aseguro de actualizar la lista antes de mostrarla
         if (listaLibrosDisponibles.isEmpty()) {
             System.out.println("Lo sentimos, en este momento todos los libros han sido alquilados");
         } else {
             System.out.println("Libros disponibles en biblioteca: ");
             for (Libro libro : listaLibrosDisponibles) {
-                System.out.println("Id " + (contador + 1) + " " + libro.getTitulo());
-                contador++;
+                System.out.println("Id " + libro.getIdLibro() + " " + libro.getTitulo());
             }
         }
     }
 
     //DEVUELVE UN LIBRO Y ACTUALIZA LAS LISTAS DE USUARIOS Y LIBROS
     @Override
-    public void devolverLibro(OperacionesUsuario operacionesUsuario, int idUsuario, int idLibro) {
+    public void devolverLibro(OutputsUsuario fw ,OperacionesUsuario operacionesUsuario, int idUsuario, int idLibro) {
         Usuario usuario = operacionesUsuario.getUsuarioPorId(idUsuario); //Capturo el id de un usuario el cual se supone que devolvera un lbro
         if (usuario != null) { //valida que el usuario exista
             List<Libro> librosAlquilados = usuario.getListaLibrosAlquilados(); //Copia la lista de libros del usuario elegido a una nueva lista
@@ -172,6 +165,7 @@ public class Biblioteca implements IOperacionesBiblioteca {
                 listaLibros.add(libroADevolver); //Incorporo nuevamente el libro a su lista original
                 actualizarListalibrosDisponibles(); //Actualizo la lista de libros disponibles
                 operacionesUsuario.actualizarListaUsuariosConLibrosPrestados(); //actualizo la lista de usuarios que tengan libros
+                //fw.actualizarListaUsuariosEnTxtConLibros(usuario); // Actualizar el archivo del usuario
                 System.out.println("Libro devuelto con exito !");
             } else {
                 System.out.println("El usuario no tiene alquilado un libro con el ID proporcionado.");

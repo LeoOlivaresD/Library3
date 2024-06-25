@@ -1,6 +1,7 @@
 package com.duoc.library3.entities;
 
 import com.duoc.library3.interfaces.IOperacionesUsuario;
+import com.duoc.library3.outputs.OutputsUsuario;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -9,37 +10,36 @@ import java.util.Scanner;
 import java.util.TreeSet;
 
 public class OperacionesUsuario implements IOperacionesUsuario {
-
     //DECLARACION DE HASHMAP PARA ALMACENAR MIS USUARIOS CON SU RESPECTIVO ID
-    private static HashMap<Integer, Usuario> listaUsuarios = new HashMap<>();
+    private HashMap<Integer, Usuario> listaUsuarios = new HashMap<>();
     //USO DE TREESET PARA LISTAR USUARIOS QUE TENGAN LIBROS PRESTADOS
-    private static TreeSet<Usuario> listaUsuariosConLibrosPrestados = new TreeSet<>();
+    private TreeSet<Usuario> listaUsuariosConLibrosPrestados = new TreeSet<>();
 
     //Constructor
     public OperacionesUsuario() {
     }
 
     //Getters & Setters
-    public static HashMap<Integer, Usuario> getListaUsuarios() {
+    public HashMap<Integer, Usuario> getListaUsuarios() {
         return listaUsuarios;
     }
 
-    public static void setListaUsuarios(HashMap<Integer, Usuario> listaUsuarios) {
-        OperacionesUsuario.listaUsuarios = listaUsuarios;
+    public void setListaUsuarios(HashMap<Integer, Usuario> listaUsuarios) {
+        this.listaUsuarios = listaUsuarios;
     }
 
-    public static TreeSet<Usuario> getListaUsuariosConLibrosPrestados() {
+    public TreeSet<Usuario> getListaUsuariosConLibrosPrestados() {
         return listaUsuariosConLibrosPrestados;
     }
 
-    public static void setListaUsuariosConLibrosPrestados(TreeSet<Usuario> listaUsuariosConLibrosPrestados) {
-        OperacionesUsuario.listaUsuariosConLibrosPrestados = listaUsuariosConLibrosPrestados;
+    public void setListaUsuariosConLibrosPrestados(TreeSet<Usuario> listaUsuariosConLibrosPrestados) {
+        this.listaUsuariosConLibrosPrestados = listaUsuariosConLibrosPrestados;
     }
 
     //Metodos implementdos por interface
     //CON CADA LLAMADA AL METODO CREARÉ NUEVOS USUARIOS QUE ALACENARÉ EN MI LISTA CON HASHMAP
     @Override
-    public void registrarUsuario() {
+    public void registrarUsuario(OutputsUsuario fw) {
         Usuario usuario = new Usuario();
         Scanner sc = new Scanner(System.in);
         Boolean cicloDoWhile = true;
@@ -49,7 +49,6 @@ public class OperacionesUsuario implements IOperacionesUsuario {
         int idAleatorio = rand.nextInt(max - min + 1) + min;
         usuario.setIdUsuario(idAleatorio);
         System.out.println("Id usuario: " + usuario.getIdUsuario());
-        //
         //Comienzo a validar los datos registrados de usuario
         do {
             System.out.println("Ingrese nombre de usuario a registrar");
@@ -77,6 +76,8 @@ public class OperacionesUsuario implements IOperacionesUsuario {
         System.out.println("Usuario registrado correctamente");
         //Guardo el usuario en mi HashMap
         listaUsuarios.put(usuario.getIdUsuario(), usuario);
+        //Almaceno el objeto de usuario junto a todos sus atributos en un archivo de texto
+        fw.almacenarUsuariosEnTxt(usuario);
     }
 
     @Override

@@ -18,7 +18,12 @@ public class Libro {
         this.disponibilidad = disponibilidad;
         this.idLibro = idLibro;
     }
-
+    public Libro(String titulo, String autor, int idLibro, boolean disponibilidad) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.idLibro = idLibro;
+        this.disponibilidad = disponibilidad;
+    }
     //Getters & Setters
     public String getTitulo() {
         return titulo;
@@ -54,7 +59,7 @@ public class Libro {
 
     @Override
     public String toString() {
-        return "Libro{" + "titulo=" + titulo + ", autor=" + autor + ", idLibro=" + idLibro + '}';
+        return "Libro{" + "titulo=" + titulo + ", autor=" + autor + ", idLibro=" + idLibro + ", diponibilidad=" + disponibilidad + '}';
     }
     
 }

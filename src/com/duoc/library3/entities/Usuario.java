@@ -3,7 +3,8 @@ package com.duoc.library3.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Usuario implements Comparable<Usuario>{
+public class Usuario implements Comparable<Usuario> {
+
     //Atrbutos
     private Integer idUsuario;
     private String nombre;
@@ -21,7 +22,13 @@ public class Usuario implements Comparable<Usuario>{
         this.listaLibrosAlquilados = new ArrayList<>();
     }
 
-    
+    public Usuario(Integer idUsuario, String nombre, String residencia, List<Libro> listaLibrosAlquilados) {
+        this.idUsuario = idUsuario;
+        this.nombre = nombre;
+        this.residencia = residencia;
+        this.listaLibrosAlquilados = listaLibrosAlquilados;
+    }
+
     //Getters & Setters
     public Integer getIdUsuario() {
         return idUsuario;
@@ -57,12 +64,14 @@ public class Usuario implements Comparable<Usuario>{
 
     @Override
     public String toString() {
-        return "Usuario{" + "nombre=" + nombre + ", residencia=" + residencia + '}';
+        return "Usuario{idUsuario=" + idUsuario
+                + ", nombre=" + nombre
+                + ", residencia=" + residencia + "}";
     }
 
     @Override
     public int compareTo(Usuario otroUsuario) {
         return Integer.compare(this.idUsuario, otroUsuario.getIdUsuario());
     }
-    
+
 }
