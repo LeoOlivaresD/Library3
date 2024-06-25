@@ -9,6 +9,7 @@ import com.duoc.library3.inputs.InputsUsuarios;
 import com.duoc.library3.outputs.OutputsLibros;
 import com.duoc.library3.outputs.OutputsUsuario;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 /*
@@ -31,16 +32,27 @@ public class Library3 {
     static Integer opcionMenu = 0;
     static boolean salirMenu = true;
     static String archivoCsvLibros = "libros.csv";
+    static String archivo = "lista usuarios.txt";
 
     public static void main(String[] args) throws LibroYaPrestadoException, LibroNoEcontradoException {
         //Creacion de objetos a utilizar
         OperacionesUsuario operacionesUsuario = new OperacionesUsuario();
         Biblioteca biblioteca = new Biblioteca();
-        //Manejo de archivos txt y csv
         OutputsLibros outPutsLibros = new OutputsLibros();
         InputLibros inputLibros = new InputLibros();
         InputsUsuarios inputUsuarios = new InputsUsuarios();
         OutputsUsuario outputsUsuario = new OutputsUsuario();
+        /*Profe aca por tiempo no pude encontrar la falla, pero se supone que si el metodo
+        esta fuera del if y hay un archivo txt lee correctamente, sin embargo si esta dentro no lee nada y asume que la lista
+        de usuarios esta vacia */
+        if (!operacionesUsuario.getListaUsuarios().isEmpty()) {
+            inputUsuarios.cargarUsuariosDesdeTxt(operacionesUsuario, archivo);
+        }
+        
+        //Cargar usuarios desde el archivo solo si ya existen
+        inputUsuarios.cargarUsuariosDesdeTxt(operacionesUsuario, archivo);
+
+        //inputUsuarios.cargarUsuariosDesdeTxt(operacionesUsuario, archivo);
         //Con este metodo estare creando un archivo csv que contenga todos los libros predeterminados
         outPutsLibros.crearArchivoLibrosCSV(archivoCsvLibros);
         //Aca leere el archivo csv de los libros y creare esos objetos para luego añadirlos a mi lista dentro del mismo metodo
@@ -72,6 +84,10 @@ public class Library3 {
                     break;
                 //ALQUILAR UN LIBRO
                 case 2:
+                    // Cargar usuarios desde el archivo solo si ya existen
+                    if (!operacionesUsuario.getListaUsuarios().isEmpty()) {
+                        inputUsuarios.cargarUsuariosDesdeTxt(operacionesUsuario, archivo);
+                    }
                     try {
                         System.out.println("Mostrando Id usuarios registrados");
                         operacionesUsuario.mostrarListaUsuario();

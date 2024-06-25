@@ -11,29 +11,29 @@ import java.util.TreeSet;
 
 public class OperacionesUsuario implements IOperacionesUsuario {
     //DECLARACION DE HASHMAP PARA ALMACENAR MIS USUARIOS CON SU RESPECTIVO ID
-    private static HashMap<Integer, Usuario> listaUsuarios = new HashMap<>();
+    private HashMap<Integer, Usuario> listaUsuarios = new HashMap<>();
     //USO DE TREESET PARA LISTAR USUARIOS QUE TENGAN LIBROS PRESTADOS
-    private static TreeSet<Usuario> listaUsuariosConLibrosPrestados = new TreeSet<>();
+    private TreeSet<Usuario> listaUsuariosConLibrosPrestados = new TreeSet<>();
 
     //Constructor
     public OperacionesUsuario() {
     }
 
     //Getters & Setters
-    public static HashMap<Integer, Usuario> getListaUsuarios() {
+    public HashMap<Integer, Usuario> getListaUsuarios() {
         return listaUsuarios;
     }
 
-    public static void setListaUsuarios(HashMap<Integer, Usuario> listaUsuarios) {
-        OperacionesUsuario.listaUsuarios = listaUsuarios;
+    public void setListaUsuarios(HashMap<Integer, Usuario> listaUsuarios) {
+        this.listaUsuarios = listaUsuarios;
     }
 
-    public static TreeSet<Usuario> getListaUsuariosConLibrosPrestados() {
+    public TreeSet<Usuario> getListaUsuariosConLibrosPrestados() {
         return listaUsuariosConLibrosPrestados;
     }
 
-    public static void setListaUsuariosConLibrosPrestados(TreeSet<Usuario> listaUsuariosConLibrosPrestados) {
-        OperacionesUsuario.listaUsuariosConLibrosPrestados = listaUsuariosConLibrosPrestados;
+    public void setListaUsuariosConLibrosPrestados(TreeSet<Usuario> listaUsuariosConLibrosPrestados) {
+        this.listaUsuariosConLibrosPrestados = listaUsuariosConLibrosPrestados;
     }
 
     //Metodos implementdos por interface
@@ -49,7 +49,6 @@ public class OperacionesUsuario implements IOperacionesUsuario {
         int idAleatorio = rand.nextInt(max - min + 1) + min;
         usuario.setIdUsuario(idAleatorio);
         System.out.println("Id usuario: " + usuario.getIdUsuario());
-        //
         //Comienzo a validar los datos registrados de usuario
         do {
             System.out.println("Ingrese nombre de usuario a registrar");

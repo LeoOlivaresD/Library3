@@ -96,8 +96,6 @@ public class Biblioteca implements IOperacionesBiblioteca {
                             actualizarListalibrosDisponibles();
                             //actualizo la lista de usuarios con libros prestados
                             operacionesUsuario.actualizarListaUsuariosConLibrosPrestados();
-                            // Actualizar el archivo del usuario
-                            fw.actualizarListaUsuariosEnTxtConLibros(usuario);
                             System.out.println("Saliendo del sistema");
                             cicloDoWhile = true;
                         }
@@ -119,6 +117,8 @@ public class Biblioteca implements IOperacionesBiblioteca {
             }
         } while (!cicloDoWhile);
     }
+    
+    
 
     //CON ESTE METODO RECORRO MI LISTA DE LIBROS BUSCANDO TODOS LOS QUE TENGAN DISPONIBILIDAD EN TRUE PARA AGREGARLOS A MI LISTA DE DISPONIBLES
     @Override
@@ -165,7 +165,7 @@ public class Biblioteca implements IOperacionesBiblioteca {
                 listaLibros.add(libroADevolver); //Incorporo nuevamente el libro a su lista original
                 actualizarListalibrosDisponibles(); //Actualizo la lista de libros disponibles
                 operacionesUsuario.actualizarListaUsuariosConLibrosPrestados(); //actualizo la lista de usuarios que tengan libros
-                fw.actualizarListaUsuariosEnTxtConLibros(usuario); // Actualizar el archivo del usuario
+                //fw.actualizarListaUsuariosEnTxtConLibros(usuario); // Actualizar el archivo del usuario
                 System.out.println("Libro devuelto con exito !");
             } else {
                 System.out.println("El usuario no tiene alquilado un libro con el ID proporcionado.");

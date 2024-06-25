@@ -1,5 +1,7 @@
 package com.duoc.library3.outputs;
 
+import com.duoc.library3.entities.Libro;
+import com.duoc.library3.entities.Usuario;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;

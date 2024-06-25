@@ -22,6 +22,13 @@ public class Usuario implements Comparable<Usuario> {
         this.listaLibrosAlquilados = new ArrayList<>();
     }
 
+    public Usuario(Integer idUsuario, String nombre, String residencia, List<Libro> listaLibrosAlquilados) {
+        this.idUsuario = idUsuario;
+        this.nombre = nombre;
+        this.residencia = residencia;
+        this.listaLibrosAlquilados = listaLibrosAlquilados;
+    }
+
     //Getters & Setters
     public Integer getIdUsuario() {
         return idUsuario;
@@ -57,22 +64,9 @@ public class Usuario implements Comparable<Usuario> {
 
     @Override
     public String toString() {
-        // Utilizo un StringBuilder para construir la cadena de texto de manera eficiente.
-        StringBuilder sb = new StringBuilder();
-        sb.append("Usuario{idUsuario=").append(idUsuario)
-                .append(", nombre=").append(nombre)
-                .append(", residencia=").append(residencia)
-                .append(", librosAlquilados=[");
-        // Itero sobre la lista de libros alquilados y llamo al método 
-        // toString de cada libro para añadir su información a la cadena
-        for (int i = 0; i < listaLibrosAlquilados.size(); i++) {
-            sb.append(listaLibrosAlquilados.get(i).toString());
-            if (i < listaLibrosAlquilados.size() - 1) {
-                sb.append(", ");
-            }
-        }
-        sb.append("]}");
-        return sb.toString();
+        return "Usuario{idUsuario=" + idUsuario
+                + ", nombre=" + nombre
+                + ", residencia=" + residencia + "}";
     }
 
     @Override
